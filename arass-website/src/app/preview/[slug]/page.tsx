@@ -19,8 +19,7 @@ export default function TemplatePreview() {
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   useEffect(() => {
-    // In dev, point to local Django server
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const API_URL = 'https://api.arass.tech';
     fetch(`${API_URL}/api/v1/templates/${params.slug}/`)
       .then((res) => {
         if (!res.ok) throw new Error('Template not found');

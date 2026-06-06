@@ -19,7 +19,7 @@ export default function TemplateGallery() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const API_URL = 'https://api.arass.tech';
     fetch(`${API_URL}/api/v1/templates/`)
       .then((res) => res.json())
       .then((data) => {
@@ -126,7 +126,7 @@ export default function TemplateGallery() {
                 >
                   <div className="tmpl-thumb">
                     <img 
-                      src={template.thumbnail_image.startsWith('http') ? template.thumbnail_image : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${template.thumbnail_image}`} 
+                      src={template.thumbnail_image.startsWith('http') ? template.thumbnail_image : `https://api.arass.tech${template.thumbnail_image}`} 
                       alt={template.title}
                       loading="lazy"
                     />
