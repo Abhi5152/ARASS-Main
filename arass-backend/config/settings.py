@@ -242,8 +242,8 @@ UNFOLD = {
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
+    }
 }
+
+# Dummy variable to prevent django-cloudinary-storage from crashing collectstatic in Django 5.1
+STATICFILES_STORAGE = ""
