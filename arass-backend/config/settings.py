@@ -97,7 +97,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Settings
-CORS_ALLOW_ALL_ORIGINS = True # For local development
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CSRF Trusted Origins (required for admin panel on custom domain)
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[
+    'https://api.arass.tech',
+    'https://arass-backend.onrender.com',
+    'http://localhost:8000',
+])
 
 # Django REST Framework Settings
 REST_FRAMEWORK = {
