@@ -1,0 +1,155 @@
+/* ================================================================
+   ARASS Tech — Premium Admin Panel Custom Styles
+   ================================================================ */
+
+/* -- Login Page Background Gradient -- */
+.login-page,
+[class*="login"] {
+    background: linear-gradient(135deg, #0a0e1a 0%, #111827 40%, #0c1425 100%) !important;
+}
+
+/* -- Sidebar Enhancements -- */
+nav[class*="sidebar"],
+aside {
+    border-right: 1px solid rgba(56, 189, 248, 0.06) !important;
+}
+
+/* -- Tables: Premium Row Hover -- */
+table tbody tr {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+table tbody tr:hover {
+    background-color: rgba(14, 165, 233, 0.04) !important;
+}
+
+/* -- Status Badge Styling -- */
+.badge-success {
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    color: #fff !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, #d97706, #f59e0b) !important;
+    color: #fff !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-danger {
+    background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+    color: #fff !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-info {
+    background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
+    color: #fff !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-muted {
+    background: rgba(107, 114, 128, 0.2) !important;
+    color: #9ca3af !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* -- Thumbnail Previews in List View -- */
+.admin-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(56, 189, 248, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.admin-thumb:hover {
+    transform: scale(1.8);
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.2);
+    z-index: 100;
+    position: relative;
+}
+
+/* -- Action Buttons Enhancement -- */
+.edit-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 14px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(56, 189, 248, 0.05));
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    color: #38bdf8 !important;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-decoration: none !important;
+    transition: all 0.25s ease;
+}
+
+.edit-action-btn:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(56, 189, 248, 0.1));
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.15);
+    transform: translateY(-1px);
+}
+
+/* -- Cards & Panels -- */
+.dashboard-card {
+    background: rgba(17, 24, 39, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.06);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    border-color: rgba(56, 189, 248, 0.12);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* -- Smooth Scrollbar -- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 189, 248, 0.3);
+}
