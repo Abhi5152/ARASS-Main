@@ -239,7 +239,7 @@ UNFOLD = {
 }
 
 # Cloudinary Configuration
-if env('CLOUDINARY_URL', default=None):
+if not DEBUG:
     STORAGES = {
         "default": {
             "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
