@@ -25,3 +25,9 @@ services:
         value: "False"
       - key: ALLOWED_HOSTS
         value: "*"
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: "admin"
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: "admin@arass.tech"
+      - key: DJANGO_SUPERUSER_PASSWORD
+        value: "Arass@2026"
