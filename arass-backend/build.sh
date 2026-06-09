@@ -4,6 +4,9 @@ set -o errexit
 
 pip install -r requirements.txt
 
+# Remove any broken symlinks that might crash WhiteNoise compression
+find . -xtype l -delete || true
+
 python manage.py collectstatic --no-input
 python manage.py migrate
 
