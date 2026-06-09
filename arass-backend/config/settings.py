@@ -250,14 +250,17 @@ STORAGES = {
 if not DEBUG:
     AWS_ACCESS_KEY_ID = env('SUPABASE_ACCESS_KEY_ID', default='')
     AWS_SECRET_ACCESS_KEY = env('SUPABASE_SECRET_ACCESS_KEY', default='')
-    AWS_STORAGE_BUCKET_NAME = env('SUPABASE_BUCKET_NAME', default='')
+    AWS_STORAGE_BUCKET_NAME = env('SUPABASE_BUCKET_NAME', default='Media')
     AWS_S3_ENDPOINT_URL = env('SUPABASE_ENDPOINT_URL', default='')
-    AWS_S3_REGION_NAME = env('SUPABASE_REGION_NAME', default='ap-south-1')
+    AWS_S3_REGION_NAME = env('SUPABASE_REGION_NAME', default='ap-southeast-1')
     
     # Required for Supabase S3 compatibility
     AWS_S3_SIGNATURE_VERSION = 's3v4'
     AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_VERIFY = True
+    AWS_QUERYSTRING_AUTH = False  # Use public URLs for media files
 
-
+    # Build public URL: https://<ref>.supabase.co/storage/v1/object/public/<bucket>/
+    _SUPABASE_REF = AWS_S3_ENDPOINT_URL.replace('https://', '').split('.')[0] if AWS_S3_ENDPOINT_URL else ''
+    AWS_S3_CUSTOM_DOMAIN = f'{_SUPABASE_REF}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}' if _SUPABASE_REF else None
