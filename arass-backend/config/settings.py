@@ -25,8 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary_storage',
-    'cloudinary',
+    'storages',
     
     # Third-party apps
     'corsheaders',
@@ -238,17 +237,27 @@ UNFOLD = {
     },
 }
 
-# Cloudinary Configuration
+# Supabase S3 Configuration
 STORAGES = {
     "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
 
-# Dummy variable to prevent django-cloudinary-storage from crashing collectstatic in Django 5.1
-STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
+if not DEBUG:
+    AWS_ACCESS_KEY_ID = env('SUPABASE_ACCESS_KEY_ID', default='')
+    AWS_SECRET_ACCESS_KEY = env('SUPABASE_SECRET_ACCESS_KEY', default='')
+    AWS_STORAGE_BUCKET_NAME = env('SUPABASE_BUCKET_NAME', default='')
+    AWS_S3_ENDPOINT_URL = env('SUPABASE_ENDPOINT_URL', default='')
+    AWS_S3_REGION_NAME = env('SUPABASE_REGION_NAME', default='ap-south-1')
+    
+    # Required for Supabase S3 compatibility
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_VERIFY = True
 
 
