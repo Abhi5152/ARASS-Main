@@ -1,0 +1,10 @@
+{
+  "experimentalServices": {
+    "arass-backend": {
+      "type": "web",
+      "root": "arass-backend",
+      "routePrefix": "/",
+      "buildCommand": "bash build.sh"
+    }
+  }
+}

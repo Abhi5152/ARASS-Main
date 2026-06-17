@@ -63,9 +63,23 @@ class BlogPost(models.Model):
         ordering = ['-created_at']
 
 class PortfolioProject(models.Model):
+    CATEGORY_CHOICES = [
+        ('ai', 'AI Projects'),
+        ('web', 'Web Apps'),
+        ('startup', 'Startups'),
+        ('research', 'Research'),
+        ('other', 'Other'),
+    ]
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    description = models.TextField()
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='web')
+    sub = models.CharField(max_length=200, blank=True, help_text="Subtitle or short description")
+    description = models.TextField(blank=True, help_text="General description (optional if problem/solution are used)")
+    problem = models.TextField(blank=True)
+    solution = models.TextField(blank=True)
+    impact = models.TextField(blank=True)
+    stack = models.JSONField(default=list, blank=True, help_text='List of strings, e.g. ["React", "Next.js", "AWS"]')
     thumbnail = models.ImageField(upload_to='portfolio/thumbnails/')
     project_url = models.URLField(blank=True)
     is_featured = models.BooleanField(default=False)

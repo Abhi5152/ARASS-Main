@@ -82,9 +82,13 @@ class TemplateAdmin(ModelAdmin):
 
     def thumbnail_preview(self, obj):
         if obj.thumbnail_image:
+            try:
+                url = obj.thumbnail_image.url
+            except Exception:
+                url = str(obj.thumbnail_image)
             return format_html(
                 '<img src="{}" class="admin-thumb" alt="{}"/>',
-                obj.thumbnail_image.url, obj.title
+                url, obj.title
             )
         return format_html('<span style="color:#6b7280;font-size:.75rem;">No image</span>')
     thumbnail_preview.short_description = ''
@@ -128,9 +132,13 @@ class BlogPostAdmin(ModelAdmin):
 
     def image_preview(self, obj):
         if obj.featured_image:
+            try:
+                url = obj.featured_image.url
+            except Exception:
+                url = str(obj.featured_image)
             return format_html(
                 '<img src="{}" class="admin-thumb" alt="{}"/>',
-                obj.featured_image.url, obj.title
+                url, obj.title
             )
         return format_html('<span style="color:#6b7280;font-size:.75rem;">No image</span>')
     image_preview.short_description = ''
@@ -149,30 +157,41 @@ class BlogPostAdmin(ModelAdmin):
 
 @admin.register(PortfolioProject)
 class PortfolioProjectAdmin(ModelAdmin):
-    list_display = ('thumbnail_preview', 'title', 'show_featured', 'created_at', 'edit_button')
+    list_display = ('thumbnail_preview', 'title', 'show_category', 'show_featured', 'created_at', 'edit_button')
     list_display_links = ('title',)
-    list_filter = ('is_featured',)
-    search_fields = ('title', 'description')
+    list_filter = ('category', 'is_featured')
+    search_fields = ('title', 'description', 'problem', 'solution')
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 20
 
     fieldsets = (
         ("Project Info", {
-            "fields": ("title", "slug", "description"),
+            "fields": ("title", "slug", "category", "sub", "description"),
         }),
-        ("Media", {
+        ("Case Study Details", {
+            "fields": ("problem", "solution", "impact"),
+        }),
+        ("Media & Links", {
             "fields": ("thumbnail", "project_url"),
         }),
-        ("Visibility", {
-            "fields": ("is_featured",),
+        ("Tech & Visibility", {
+            "fields": ("stack", "is_featured"),
         }),
     )
 
+    @display(description="Category", label=True)
+    def show_category(self, obj):
+        return obj.get_category_display()
+
     def thumbnail_preview(self, obj):
         if obj.thumbnail:
+            try:
+                url = obj.thumbnail.url
+            except Exception:
+                url = str(obj.thumbnail)
             return format_html(
                 '<img src="{}" class="admin-thumb" alt="{}"/>',
-                obj.thumbnail.url, obj.title
+                url, obj.title
             )
         return format_html('<span style="color:#6b7280;font-size:.75rem;">No image</span>')
     thumbnail_preview.short_description = ''

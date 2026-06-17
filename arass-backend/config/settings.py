@@ -237,17 +237,19 @@ UNFOLD = {
     },
 }
 
-# Supabase S3 Configuration
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.StaticFilesStorage",
-    },
-}
+# Check if Supabase credentials are provided
+has_supabase = bool(env('SUPABASE_ACCESS_KEY_ID', default=''))
 
-if not DEBUG:
+if has_supabase:
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.StaticFilesStorage",
+        },
+    }
+    
     AWS_ACCESS_KEY_ID = env('SUPABASE_ACCESS_KEY_ID', default='')
     AWS_SECRET_ACCESS_KEY = env('SUPABASE_SECRET_ACCESS_KEY', default='')
     AWS_STORAGE_BUCKET_NAME = env('SUPABASE_BUCKET_NAME', default='Media')
@@ -264,3 +266,12 @@ if not DEBUG:
     # Build public URL: https://<ref>.supabase.co/storage/v1/object/public/<bucket>/
     _SUPABASE_REF = AWS_S3_ENDPOINT_URL.replace('https://', '').split('.')[0] if AWS_S3_ENDPOINT_URL else ''
     AWS_S3_CUSTOM_DOMAIN = f'{_SUPABASE_REF}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}' if _SUPABASE_REF else None
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
