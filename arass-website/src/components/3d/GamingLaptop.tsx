@@ -42,10 +42,10 @@ type GLTFResult = GLTF & {
   }
 }
 
-export default function GamingLaptop(props: JSX.IntrinsicElements['group']) {
+export default function GamingLaptop(props: React.JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group>(null);
   const scrollTarget = useRef(0);
-  const { nodes, materials } = useGLTF('/models/gaming_laptop.glb') as GLTFResult;
+  const { nodes, materials } = useGLTF('/models/gaming_laptop.glb') as unknown as GLTFResult;
   
   const screenTexture = useTexture('/images/screen-image-v4.webp');
   screenTexture.colorSpace = THREE.SRGBColorSpace;
