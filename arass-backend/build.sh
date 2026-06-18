@@ -9,7 +9,7 @@ find . -xtype l -delete || true
 
 python manage.py collectstatic --no-input
 python manage.py migrate
-python manage.py loaddata portfolio_dump.json
+python load_portfolios.py
 
 # Create superuser from environment variables (only if it doesn't exist)
 if [ "$DJANGO_SUPERUSER_USERNAME" ]; then
