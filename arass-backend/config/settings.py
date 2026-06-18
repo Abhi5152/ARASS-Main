@@ -54,7 +54,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,6 +139,7 @@ UNFOLD = {
         lambda request: "/static/css/admin_custom.css",
     ],
     "ENVIRONMENT": "core.utils.environment_callback",
+    "DASHBOARD_CALLBACK": "core.utils.dashboard_callback",
     "COLORS": {
         "font": {
             "subtle-light": "107 114 128",

@@ -1,0 +1,88 @@
+{% extends 'admin/base.html' %}
+{% load i18n unfold %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Total Bookings -->
+        <div class="flex items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="inline-flex flex-shrink-0 items-center justify-center h-12 w-12 text-blue-600 bg-blue-100 rounded-lg dark:bg-blue-900/30 dark:text-blue-400">
+                <span class="material-symbols-outlined">calendar_month</span>
+            </div>
+            <div class="ml-4">
+                <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">{{ total_bookings|default:"0" }}</h2>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Bookings</p>
+            </div>
+        </div>
+
+        <!-- Total Works / Projects -->
+        <div class="flex items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="inline-flex flex-shrink-0 items-center justify-center h-12 w-12 text-green-600 bg-green-100 rounded-lg dark:bg-green-900/30 dark:text-green-400">
+                <span class="material-symbols-outlined">palette</span>
+            </div>
+            <div class="ml-4">
+                <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">{{ total_works|default:"0" }}</h2>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Portfolio Projects</p>
+            </div>
+        </div>
+
+        <!-- Total Clients -->
+        <div class="flex items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="inline-flex flex-shrink-0 items-center justify-center h-12 w-12 text-purple-600 bg-purple-100 rounded-lg dark:bg-purple-900/30 dark:text-purple-400">
+                <span class="material-symbols-outlined">storefront</span>
+            </div>
+            <div class="ml-4">
+                <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">{{ total_clients|default:"0" }}</h2>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Clients</p>
+            </div>
+        </div>
+
+        <!-- Pending Tasks -->
+        <div class="flex items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="inline-flex flex-shrink-0 items-center justify-center h-12 w-12 text-amber-600 bg-amber-100 rounded-lg dark:bg-amber-900/30 dark:text-amber-400">
+                <span class="material-symbols-outlined">task_alt</span>
+            </div>
+            <div class="ml-4">
+                <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">{{ pending_tasks|default:"0" }}</h2>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Tasks</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Logs section -->
+    {% if recent_logs %}
+    <div class="mb-8 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-white uppercase tracking-wider">Recent Work Logs</h3>
+        </div>
+        <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+            {% for log in recent_logs %}
+            <li class="px-6 py-4 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ log.user.username }} logged {{ log.hours_spent }}h on {{ log.date }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-lg">{{ log.description }}</p>
+                </div>
+                {% if log.task %}
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                    {{ log.task.project.title }}
+                </span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="flex flex-col lg:flex-row lg:gap-8">
+        <div class="grow">
+            {% include "unfold/helpers/app_list_default.html" %}
+        </div>
+
+        {% include "unfold/helpers/history.html" %}
+    </div>
+{% endblock %}
