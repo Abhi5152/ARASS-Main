@@ -3,7 +3,7 @@
 import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Float, Preload, Environment, useProgress, Html } from '@react-three/drei';
-import ScrollDevice from './ScrollDevice';
+import GamingLaptop from './GamingLaptop';
 import ParticleField from './ParticleField';
 import FloatingGrid from './FloatingGrid';
 
@@ -51,7 +51,7 @@ export default function WorksScene() {
           
           <EnvReadyWrapper>
             <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
-              <ScrollDevice />
+              <GamingLaptop />
             </Float>
           </EnvReadyWrapper>
           
