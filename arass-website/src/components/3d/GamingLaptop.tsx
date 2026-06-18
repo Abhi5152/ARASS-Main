@@ -50,6 +50,12 @@ export default function GamingLaptop(props: JSX.IntrinsicElements['group']) {
   const screenTexture = useTexture('/images/screen-image-v4.webp');
   screenTexture.colorSpace = THREE.SRGBColorSpace;
   screenTexture.flipY = false;
+  
+  // The UV map for this specific model's screen is rotated 180 degrees and mirrored
+  screenTexture.center.set(0.5, 0.5);
+  screenTexture.rotation = Math.PI;
+  screenTexture.wrapS = THREE.RepeatWrapping;
+  screenTexture.repeat.x = -1;
 
   useFrame(() => {
     if (!group.current) return;
@@ -65,35 +71,37 @@ export default function GamingLaptop(props: JSX.IntrinsicElements['group']) {
     
     const r1 = scrollTarget.current;
     
-    // Smooth scroll animations matching the previous ScrollDevice logic
-    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -0.2 + r1 * 0.4, 0.1);
+    // Smooth scroll animations
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, 0.05 + r1 * 0.4, 0.1);
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, -0.5 + r1 * 1.0, 0.1);
     group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, -0.1 + r1 * 0.2, 0.1);
     group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, -1.0 + Math.sin(r1 * Math.PI * 2) * 0.5, 0.1);
   });
 
   return (
-    <group ref={group} {...props} dispose={null} scale={2.5}>
-      <group position={[-1.199, 0.096, 0]} rotation={[0, 0, -1.38]}>
-        <mesh geometry={nodes.Object_4.geometry} material={materials['Material.001']} />
-        <mesh geometry={nodes.Object_5.geometry} material={materials['Material.002']} />
-        <mesh geometry={nodes.Object_6.geometry} material={materials['Material.003']} />
-        {/* Screen Mesh (Object_7 with Material.004 originally) mapped to our website texture */}
-        <mesh geometry={nodes.Object_7.geometry}>
-          <meshBasicMaterial map={screenTexture} toneMapped={false} />
-        </mesh>
-        <mesh geometry={nodes.Object_8.geometry} material={materials['Material.005']} />
-        <mesh geometry={nodes.Object_9.geometry} material={materials['Material.006']} />
-        <mesh geometry={nodes.Object_10.geometry} material={materials['Material.007']} />
-        <mesh geometry={nodes.Object_11.geometry} material={materials['Material.013']} />
+    <group ref={group} {...props} dispose={null} scale={1.1} position={[0, -0.5, 0]}>
+      <group rotation={[0, -Math.PI / 2, 0]}>
+        <group position={[-1.199, 0.096, 0]} rotation={[0, 0, -1.38]}>
+          <mesh geometry={nodes.Object_4.geometry} material={materials['Material.001']} />
+          <mesh geometry={nodes.Object_5.geometry} material={materials['Material.002']} />
+          <mesh geometry={nodes.Object_6.geometry} material={materials['Material.003']} />
+          {/* Screen Mesh (Object_7 with Material.004 originally) mapped to our website texture */}
+          <mesh geometry={nodes.Object_7.geometry}>
+            <meshBasicMaterial map={screenTexture} toneMapped={false} />
+          </mesh>
+          <mesh geometry={nodes.Object_8.geometry} material={materials['Material.005']} />
+          <mesh geometry={nodes.Object_9.geometry} material={materials['Material.006']} />
+          <mesh geometry={nodes.Object_10.geometry} material={materials['Material.007']} />
+          <mesh geometry={nodes.Object_11.geometry} material={materials['Material.013']} />
+        </group>
+        <mesh geometry={nodes.Object_13.geometry} material={materials.Material} />
+        <mesh geometry={nodes.Object_14.geometry} material={materials['Material.009']} />
+        <mesh geometry={nodes.Object_15.geometry} material={materials['Material.009']} />
+        <mesh geometry={nodes.Object_16.geometry} material={materials['Material.010']} />
+        <mesh geometry={nodes.Object_17.geometry} material={materials['Material.008']} />
+        <mesh geometry={nodes.Object_18.geometry} material={materials['Material.011']} />
+        <mesh geometry={nodes.Object_19.geometry} material={materials['Material.012']} />
       </group>
-      <mesh geometry={nodes.Object_13.geometry} material={materials.Material} />
-      <mesh geometry={nodes.Object_14.geometry} material={materials['Material.009']} />
-      <mesh geometry={nodes.Object_15.geometry} material={materials['Material.009']} />
-      <mesh geometry={nodes.Object_16.geometry} material={materials['Material.010']} />
-      <mesh geometry={nodes.Object_17.geometry} material={materials['Material.008']} />
-      <mesh geometry={nodes.Object_18.geometry} material={materials['Material.011']} />
-      <mesh geometry={nodes.Object_19.geometry} material={materials['Material.012']} />
     </group>
   );
 }

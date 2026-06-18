@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense, useRef, useState, useEffect } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { Float, Preload, Environment, useProgress, Html } from '@react-three/drei';
 import GamingLaptop from './GamingLaptop';
 import ParticleField from './ParticleField';
@@ -49,25 +49,15 @@ export default function WorksScene() {
             <FloatingGrid />
           </group>
           
-          <EnvReadyWrapper>
-            <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
-              <GamingLaptop />
-            </Float>
-          </EnvReadyWrapper>
+          <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
+            <GamingLaptop />
+          </Float>
           
           <Preload all />
         </Suspense>
       </Canvas>
     </div>
   );
-}
-
-function EnvReadyWrapper({ children }: { children: React.ReactNode }) {
-  const env = useThree((state) => state.scene.environment);
-  // Do not render the children (the laptop) until the environment map is fully generated and applied to the scene.
-  // This completely eliminates the "black flash" caused by the delay between the HDR download and PMREM generation.
-  if (!env) return null;
-  return <>{children}</>;
 }
 
 function Loader() {
