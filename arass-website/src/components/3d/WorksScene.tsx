@@ -42,23 +42,31 @@ export default function WorksScene() {
         <spotLight position={[0, 5, 5]} angle={0.5} penumbra={1} intensity={1.5} color="#ffffff" />
         
         <Suspense fallback={<Loader />}>
+          <Environment preset="city" />
+          
           <ParticleField count={300} />
           
           <group position={[0, -2, 0]}>
             <FloatingGrid />
           </group>
           
-          <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
-            <ScrollDevice />
-          </Float>
-        </Suspense>
-
-        <Suspense fallback={null}>
-          <Environment preset="city" />
+          <EnvReadyWrapper>
+            <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
+              <ScrollDevice />
+            </Float>
+          </EnvReadyWrapper>
         </Suspense>
       </Canvas>
     </div>
   );
+}
+
+function EnvReadyWrapper({ children }: { children: React.ReactNode }) {
+  const env = useThree((state) => state.scene.environment);
+  // Do not render the children (the laptop) until the environment map is fully generated and applied to the scene.
+  // This completely eliminates the "black flash" caused by the delay between the HDR download and PMREM generation.
+  if (!env) return null;
+  return <>{children}</>;
 }
 
 import { useProgress, Html } from '@react-three/drei';
