@@ -146,9 +146,46 @@ export default function ScrollDevice() {
         </mesh>
 
         {/* Screen Content (WebGL Texture - loads with the model) */}
-        <mesh position={[0, 1.42, 0.0211]}>
-          <planeGeometry args={[4.14, 2.79]} />
+        <mesh position={[0, 1.35, 0.0211]}>
+          <planeGeometry args={[4.14, 2.6]} />
           <meshBasicMaterial map={screenTexture} toneMapped={false} />
+        </mesh>
+
+        {/* ── Browser Chrome Frame ── */}
+        {/* Top bar background */}
+        <mesh position={[0, 2.74, 0.0212]}>
+          <planeGeometry args={[4.14, 0.18]} />
+          <meshBasicMaterial color="#0d0f14" />
+        </mesh>
+        {/* Separator line */}
+        <mesh position={[0, 2.65, 0.0213]}>
+          <planeGeometry args={[4.14, 0.003]} />
+          <meshBasicMaterial color="#1a1d24" />
+        </mesh>
+        {/* Traffic light - Red */}
+        <mesh position={[-1.88, 2.74, 0.0213]}>
+          <circleGeometry args={[0.025, 12]} />
+          <meshBasicMaterial color="#ff5f56" />
+        </mesh>
+        {/* Traffic light - Yellow */}
+        <mesh position={[-1.8, 2.74, 0.0213]}>
+          <circleGeometry args={[0.025, 12]} />
+          <meshBasicMaterial color="#ffbd2e" />
+        </mesh>
+        {/* Traffic light - Green */}
+        <mesh position={[-1.72, 2.74, 0.0213]}>
+          <circleGeometry args={[0.025, 12]} />
+          <meshBasicMaterial color="#27c93f" />
+        </mesh>
+        {/* URL bar background */}
+        <mesh position={[0, 2.74, 0.0213]}>
+          <planeGeometry args={[2.4, 0.1]} />
+          <meshBasicMaterial color="#0a0c12" />
+        </mesh>
+        {/* URL bar border */}
+        <mesh position={[0, 2.74, 0.02125]}>
+          <planeGeometry args={[2.42, 0.11]} />
+          <meshBasicMaterial color="#1a1d24" />
         </mesh>
       </group>
     </group>
