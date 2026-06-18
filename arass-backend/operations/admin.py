@@ -45,6 +45,14 @@ class ProjectAdmin(ModelAdmin):
         }),
     )
 
+    def save_formset(self, request, form, formset, change):
+        try:
+            super().save_formset(request, form, formset, change)
+        except Exception as e:
+            from django.contrib import messages
+            import traceback
+            messages.error(request, f"Error saving changelist: {str(e)} | Trace: {traceback.format_exc()[:500]}")
+
     @display(description="Status", label={
         "Planning": "warning",
         "In Progress": "info",
