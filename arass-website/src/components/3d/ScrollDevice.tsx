@@ -54,9 +54,9 @@ export default function ScrollDevice() {
       {/* ══════════ LAPTOP BASE ══════════ */}
       <group position={[0, -1.42, 0.2]}>
         {/* Top plate */}
-        <RoundedBox args={[4.2, 0.03, 2.8]} radius={0.015} smoothness={1} position={[0, 0.015, 0]} material={shared.bodyMat} />
+        <RoundedBox args={[4.2, 0.03, 2.8]} radius={0.015} smoothness={2} position={[0, 0.015, 0]} material={shared.bodyMat} />
         {/* Bottom plate */}
-        <RoundedBox args={[4.15, 0.03, 2.75]} radius={0.015} smoothness={1} position={[0, -0.015, 0]} material={shared.darkMat} />
+        <RoundedBox args={[4.15, 0.03, 2.75]} radius={0.015} smoothness={2} position={[0, -0.015, 0]} material={shared.darkMat} />
         {/* Rubber feet - 4 corners */}
         {[[-1.6, -0.04, -1.0], [1.6, -0.04, -1.0], [-1.6, -0.04, 1.0], [1.6, -0.04, 1.0]].map((pos, i) => (
           <mesh key={i} position={pos as [number, number, number]} geometry={shared.footGeo} material={shared.footMat} />
@@ -121,7 +121,7 @@ export default function ScrollDevice() {
       {/* ══════════ SCREEN LID ══════════ */}
       <group position={[0, -1.4, -1.2]} rotation={[0.1, 0, 0]}>
         {/* Outer lid shell */}
-        <RoundedBox args={[4.2, 2.85, 0.04]} radius={0.02} smoothness={1} position={[0, 1.42, 0]} material={shared.bodyMat} />
+        <RoundedBox args={[4.2, 2.85, 0.04]} radius={0.02} smoothness={2} position={[0, 1.42, 0]} material={shared.bodyMat} />
         
         {/* Screen Bezel */}
         <mesh position={[0, 1.42, 0.021]}>
@@ -145,47 +145,16 @@ export default function ScrollDevice() {
           <meshBasicMaterial color="#22c55e" />
         </mesh>
 
-        {/* Screen Content (WebGL Texture - loads with the model) */}
-        <mesh position={[0, 1.35, 0.0211]}>
-          <planeGeometry args={[4.14, 2.6]} />
+        {/* Screen Content (WebGL Texture - includes browser chrome in the image) */}
+        <mesh position={[0, 1.42, 0.0211]}>
+          <planeGeometry args={[4.14, 2.79]} />
           <meshBasicMaterial map={screenTexture} toneMapped={false} />
         </mesh>
 
-        {/* ── Browser Chrome Frame ── */}
-        {/* Top bar background */}
-        <mesh position={[0, 2.74, 0.0212]}>
-          <planeGeometry args={[4.14, 0.18]} />
-          <meshBasicMaterial color="#0d0f14" />
-        </mesh>
-        {/* Separator line */}
-        <mesh position={[0, 2.65, 0.0213]}>
-          <planeGeometry args={[4.14, 0.003]} />
-          <meshBasicMaterial color="#1a1d24" />
-        </mesh>
-        {/* Traffic light - Red */}
-        <mesh position={[-1.88, 2.74, 0.0213]}>
-          <circleGeometry args={[0.025, 12]} />
-          <meshBasicMaterial color="#ff5f56" />
-        </mesh>
-        {/* Traffic light - Yellow */}
-        <mesh position={[-1.8, 2.74, 0.0213]}>
-          <circleGeometry args={[0.025, 12]} />
-          <meshBasicMaterial color="#ffbd2e" />
-        </mesh>
-        {/* Traffic light - Green */}
-        <mesh position={[-1.72, 2.74, 0.0213]}>
-          <circleGeometry args={[0.025, 12]} />
-          <meshBasicMaterial color="#27c93f" />
-        </mesh>
-        {/* URL bar background */}
-        <mesh position={[0, 2.74, 0.0213]}>
-          <planeGeometry args={[2.4, 0.1]} />
-          <meshBasicMaterial color="#0a0c12" />
-        </mesh>
-        {/* URL bar border */}
-        <mesh position={[0, 2.74, 0.02125]}>
-          <planeGeometry args={[2.42, 0.11]} />
-          <meshBasicMaterial color="#1a1d24" />
+        {/* Glass reflection overlay for premium look */}
+        <mesh position={[0, 1.42, 0.0215]}>
+          <planeGeometry args={[4.14, 2.79]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.03} />
         </mesh>
       </group>
     </group>
