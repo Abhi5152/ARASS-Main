@@ -106,22 +106,22 @@ export default function ScrollDevice() {
         <RoundedBox args={[4.2, 0.03, 2.8]} radius={0.015} smoothness={2} position={[0, 0.015, 0]}>
           <meshPhysicalMaterial 
             color={bodyColor} 
-            roughness={0.25} 
-            metalness={0.95} 
+            roughness={0.3} 
+            metalness={0.7} 
             clearcoat={0.3}
             clearcoatRoughness={0.2}
-            envMapIntensity={2}
+            envMapIntensity={1.5}
           />
         </RoundedBox>
         {/* Bottom plate (slightly darker) */}
         <RoundedBox args={[4.15, 0.03, 2.75]} radius={0.015} smoothness={2} position={[0, -0.015, 0]}>
           <meshPhysicalMaterial 
             color={darkAccent} 
-            roughness={0.35} 
-            metalness={0.9} 
+            roughness={0.4} 
+            metalness={0.6} 
             clearcoat={0.2}
             clearcoatRoughness={0.3}
-            envMapIntensity={1.5}
+            envMapIntensity={1.2}
           />
         </RoundedBox>
         {/* Rubber feet - 4 corners */}
@@ -196,11 +196,11 @@ export default function ScrollDevice() {
         <cylinderGeometry args={[0.04, 0.04, 4.0, 16]} />
         <meshPhysicalMaterial 
           color="#383d4e" 
-          roughness={0.2} 
-          metalness={0.95}
+          roughness={0.3} 
+          metalness={0.7}
           clearcoat={0.5}
           clearcoatRoughness={0.1}
-          envMapIntensity={2.5}
+          envMapIntensity={1.5}
         />
       </mesh>
 
@@ -210,11 +210,11 @@ export default function ScrollDevice() {
         <RoundedBox args={[4.2, 2.85, 0.04]} radius={0.02} smoothness={2} position={[0, 1.42, 0]}>
           <meshPhysicalMaterial 
             color={bodyColor} 
-            roughness={0.25} 
-            metalness={0.95} 
+            roughness={0.3} 
+            metalness={0.7} 
             clearcoat={0.4}
             clearcoatRoughness={0.15}
-            envMapIntensity={2.5}
+            envMapIntensity={1.5}
           />
         </RoundedBox>
         
