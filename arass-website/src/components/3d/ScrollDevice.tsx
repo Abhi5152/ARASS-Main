@@ -103,7 +103,7 @@ export default function ScrollDevice() {
       {/* Main body - front thinner, back thicker like a real MacBook */}
       <group position={[0, -1.42, 0.2]}>
         {/* Top plate */}
-        <RoundedBox args={[4.2, 0.03, 2.8]} radius={0.015} smoothness={4} position={[0, 0.015, 0]}>
+        <RoundedBox args={[4.2, 0.03, 2.8]} radius={0.015} smoothness={2} position={[0, 0.015, 0]}>
           <meshPhysicalMaterial 
             color={bodyColor} 
             roughness={0.25} 
@@ -114,7 +114,7 @@ export default function ScrollDevice() {
           />
         </RoundedBox>
         {/* Bottom plate (slightly darker) */}
-        <RoundedBox args={[4.15, 0.03, 2.75]} radius={0.015} smoothness={4} position={[0, -0.015, 0]}>
+        <RoundedBox args={[4.15, 0.03, 2.75]} radius={0.015} smoothness={2} position={[0, -0.015, 0]}>
           <meshPhysicalMaterial 
             color={darkAccent} 
             roughness={0.35} 
@@ -207,7 +207,7 @@ export default function ScrollDevice() {
       {/* ══════════ SCREEN LID ══════════ */}
       <group position={[0, -1.4, -1.2]} rotation={[0.1, 0, 0]}>
         {/* Outer lid shell */}
-        <RoundedBox args={[4.2, 2.85, 0.04]} radius={0.02} smoothness={4} position={[0, 1.42, 0]}>
+        <RoundedBox args={[4.2, 2.85, 0.04]} radius={0.02} smoothness={2} position={[0, 1.42, 0]}>
           <meshPhysicalMaterial 
             color={bodyColor} 
             roughness={0.25} 
