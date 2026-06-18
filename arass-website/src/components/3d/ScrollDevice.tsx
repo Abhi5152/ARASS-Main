@@ -1,9 +1,8 @@
-import Image from 'next/image';
 'use client';
 
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox, Html } from '@react-three/drei';
+import { RoundedBox, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 const caseStudies = [
@@ -31,6 +30,8 @@ export default function ScrollDevice() {
   const group = useRef<THREE.Group>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const scrollTarget = useRef(0);
+  const screenTexture = useTexture('/images/screen-image-v4.png');
+  screenTexture.colorSpace = THREE.SRGBColorSpace;
 
   useFrame((state) => {
     if (!group.current) return;
@@ -243,45 +244,11 @@ export default function ScrollDevice() {
           />
         </mesh>
 
-        {/* Screen Content (Html overlay) */}
-        <Html
-          transform
-          wrapperClass="htmlScreen"
-          distanceFactor={1.5}
-          position={[0, 1.42, 0.022]}
-          zIndexRange={[100, 0]}
-        >
-          <div 
-            className="w-[1024px] h-[640px] bg-[#050914] rounded-sm overflow-hidden relative"
-            style={{ 
-              boxShadow: 'inset 0 0 80px rgba(0,0,0,0.95)',
-              border: '1px solid rgba(255,255,255,0.06)'
-            }}
-          >
-            {/* Top Browser Bar */}
-            <div className="h-10 bg-[rgba(255,255,255,0.03)] w-full flex items-center px-4 gap-2 border-b border-white/5 relative z-20">
-              <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-              <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-              <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-              <div className="ml-4 flex-1 h-6 bg-[rgba(0,0,0,0.3)] rounded-md flex items-center justify-center border border-white/5">
-                <span className="text-[10px] text-gray-500 font-mono tracking-widest flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[10px]">lock</span> arass.tech/portfolio
-                </span>
-              </div>
-            </div>
-
-            {/* Content Container */}
-            <div className="w-full h-[600px] relative bg-[#050914] overflow-hidden">
-              <Image 
-                src="/images/screen-image-v4.png" 
-                alt="Screen Content" 
-                fill
-                priority
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </Html>
+        {/* Screen Content (WebGL Texture) */}
+        <mesh position={[0, 1.42, 0.0211]}>
+          <planeGeometry args={[4.14, 2.79]} />
+          <meshBasicMaterial map={screenTexture} toneMapped={false} />
+        </mesh>
       </group>
     </group>
   );
