@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'core',
+    'operations',
 ]
 
 MIDDLEWARE = [
@@ -213,6 +214,38 @@ UNFOLD = {
                         "title": "Site Settings",
                         "icon": "settings",
                         "link": "/admin/core/sitesettings/",
+                    },
+                ],
+            },
+            {
+                "title": "Operations & CRM",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Clients",
+                        "icon": "storefront",
+                        "link": "/admin/operations/client/",
+                    },
+                    {
+                        "title": "Projects",
+                        "icon": "account_tree",
+                        "link": "/admin/operations/project/",
+                    },
+                    {
+                        "title": "Tasks & Works",
+                        "icon": "task_alt",
+                        "link": "/admin/operations/task/",
+                    },
+                    {
+                        "title": "Work Logs",
+                        "icon": "history",
+                        "link": "/admin/operations/worklog/",
+                    },
+                    {
+                        "title": "Company Documents",
+                        "icon": "folder_shared",
+                        "link": "/admin/operations/companydocument/",
                     },
                 ],
             },
