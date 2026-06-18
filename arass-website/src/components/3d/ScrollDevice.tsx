@@ -1,7 +1,7 @@
 import Image from 'next/image';
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { RoundedBox, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -82,6 +82,20 @@ export default function ScrollDevice() {
   const bodyColor = '#a1a4a8';
   const darkAccent = '#898c90';
 
+  // Memoize geometries and materials for repeated elements to save memory and reduce draw call overhead
+  const { keyGeometry, keyMaterial, holeGeometry, holeMaterial } = useMemo(() => {
+    return {
+      keyGeometry: new THREE.PlaneGeometry(0.2, 0.22),
+      keyMaterial: new THREE.MeshStandardMaterial({
+        color: '#14171f',
+        roughness: 0.7,
+        metalness: 0.1,
+      }),
+      holeGeometry: new THREE.PlaneGeometry(0.12, 0.04),
+      holeMaterial: new THREE.MeshBasicMaterial({ color: '#080a10' }),
+    };
+  }, []);
+
   return (
     <group ref={group} position={[0, 0, 0]}>
       
@@ -135,15 +149,9 @@ export default function ScrollDevice() {
                 key={`key-${row}-${col}`} 
                 position={[-1.6 + col * 0.235, 0, 0]} 
                 rotation={[-Math.PI / 2, 0, 0]}
-              >
-                <planeGeometry args={[0.2, 0.22]} />
-                <meshPhysicalMaterial 
-                  color="#14171f" 
-                  roughness={0.7} 
-                  metalness={0.1}
-                  clearcoat={0.1}
-                />
-              </mesh>
+                geometry={keyGeometry}
+                material={keyMaterial}
+              />
             ))}
           </group>
         ))}
@@ -172,10 +180,13 @@ export default function ScrollDevice() {
       {[-1, 1].map((side) => (
         <group key={`speaker-${side}`} position={[side * 1.9, -1.38, 0.2]}>
           {[...Array(8)].map((_, i) => (
-            <mesh key={`hole-${i}`} position={[0, 0, -0.8 + i * 0.23]} rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[0.12, 0.04]} />
-              <meshBasicMaterial color="#080a10" />
-            </mesh>
+            <mesh 
+              key={`hole-${i}`} 
+              position={[0, 0, -0.8 + i * 0.23]} 
+              rotation={[-Math.PI / 2, 0, 0]}
+              geometry={holeGeometry}
+              material={holeMaterial}
+            />
           ))}
         </group>
       ))}

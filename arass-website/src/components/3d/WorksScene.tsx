@@ -41,10 +41,10 @@ export default function WorksScene() {
         <pointLight position={[0, 3, -5]} intensity={0.2} color="#7b2ff7" />
         <spotLight position={[0, 5, 5]} angle={0.5} penumbra={1} intensity={1.5} color="#ffffff" />
         
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <Environment preset="city" />
           
-          <ParticleField count={500} />
+          <ParticleField count={300} />
           
           <group position={[0, -2, 0]}>
             <FloatingGrid />
@@ -56,5 +56,19 @@ export default function WorksScene() {
         </Suspense>
       </Canvas>
     </div>
+  );
+}
+
+import { useProgress, Html } from '@react-three/drei';
+
+function Loader() {
+  const { progress } = useProgress();
+  return (
+    <Html center>
+      <div className="flex flex-col items-center justify-center pointer-events-none">
+        <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4"></div>
+        <div className="text-white font-mono text-sm tracking-widest">{progress.toFixed(0)}%</div>
+      </div>
+    </Html>
   );
 }
