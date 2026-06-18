@@ -10,7 +10,6 @@ from django.utils import timezone
 @admin.register(Client)
 class ClientAdmin(ModelAdmin):
     list_display = ('name', 'company', 'email', 'phone', 'deadline', 'created_at')
-    list_editable = ('company', 'email', 'phone', 'deadline')
     search_fields = ('name', 'company', 'email')
     list_filter = ('created_at',)
     list_per_page = 20
@@ -28,7 +27,6 @@ class ClientAdmin(ModelAdmin):
 @admin.register(Project)
 class ProjectAdmin(ModelAdmin):
     list_display = ('title', 'project_type', 'client', 'show_status', 'show_progress', 'deadline', 'show_pricing', 'created_at')
-    list_editable = ('project_type', 'client', 'deadline')
     search_fields = ('title', 'description')
     list_filter = ('project_type', 'status')
     list_per_page = 20
@@ -55,7 +53,10 @@ class ProjectAdmin(ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         try:
-            return super().changelist_view(request, extra_context)
+            response = super().changelist_view(request, extra_context)
+            if hasattr(response, 'render'):
+                response.render()
+            return response
         except Exception as e:
             from django.contrib import messages
             import traceback
@@ -75,7 +76,7 @@ class ProjectAdmin(ModelAdmin):
 
     @display(description="Progress")
     def show_progress(self, obj):
-        color = "#10b981" if obj.progress == 100 else "#3b82f6"
+        color = "#10b981" if str(obj.progress) == "100" else "#3b82f6"
         return format_html(
             '<div style="width: 100%; background-color: #e5e7eb; border-radius: 4px;">'
             '<div style="width: {}%; background-color: {}; height: 8px; border-radius: 4px;"></div>'
@@ -85,7 +86,10 @@ class ProjectAdmin(ModelAdmin):
 
     def show_pricing(self, obj):
         if obj.pricing:
-            return format_html('<span style="color: #10b981; font-weight: 600;">₹{:,.2f}</span>', obj.pricing)
+            try:
+                return format_html('<span style="color: #10b981; font-weight: 600;">₹{:,.2f}</span>', float(obj.pricing))
+            except (ValueError, TypeError):
+                return format_html('<span style="color: #10b981; font-weight: 600;">₹{}</span>', obj.pricing)
         return format_html('<span style="color: #6b7280;">—</span>')
     show_pricing.short_description = "Pricing"
 
@@ -93,7 +97,6 @@ class ProjectAdmin(ModelAdmin):
 @admin.register(Task)
 class TaskAdmin(ModelAdmin):
     list_display = ('title', 'project', 'assigned_to', 'due_date', 'show_pricing', 'is_completed')
-    list_editable = ('assigned_to', 'due_date', 'is_completed')
     list_filter = ('is_completed', 'assigned_to', 'project')
     search_fields = ('title', 'description')
     list_per_page = 20
@@ -112,12 +115,16 @@ class TaskAdmin(ModelAdmin):
 
     def show_pricing(self, obj):
         if obj.pricing:
-            return format_html('<span style="color: #10b981; font-weight: 600;">₹{:,.2f}</span>', obj.pricing)
+            try:
+                return format_html('<span style="color: #10b981; font-weight: 600;">₹{:,.2f}</span>', float(obj.pricing))
+            except (ValueError, TypeError):
+                return format_html('<span style="color: #10b981; font-weight: 600;">₹{}</span>', obj.pricing)
         return format_html('<span style="color: #6b7280;">—</span>')
     show_pricing.short_description = "Price"
 
     def save_model(self, request, obj, form, change):
         if obj.is_completed and not obj.completed_at:
+            from django.utils import timezone
             obj.completed_at = timezone.now()
         elif not obj.is_completed:
             obj.completed_at = None
@@ -127,7 +134,6 @@ class TaskAdmin(ModelAdmin):
 @admin.register(WorkLog)
 class WorkLogAdmin(ModelAdmin):
     list_display = ('user', 'date', 'hours_spent', 'task', 'short_description')
-    list_editable = ('date', 'hours_spent')
     list_filter = ('user', 'date')
     search_fields = ('description',)
     list_per_page = 20
@@ -143,7 +149,6 @@ class WorkLogAdmin(ModelAdmin):
 @admin.register(CompanyDocument)
 class CompanyDocumentAdmin(ModelAdmin):
     list_display = ('title', 'category', 'uploaded_by', 'uploaded_at', 'document_link')
-    list_editable = ('category',)
     list_filter = ('category',)
     search_fields = ('title',)
     list_per_page = 20
