@@ -104,23 +104,19 @@ export default function ScrollDevice() {
       <group position={[0, -1.42, 0.2]}>
         {/* Top plate */}
         <RoundedBox args={[4.2, 0.03, 2.8]} radius={0.015} smoothness={2} position={[0, 0.015, 0]}>
-          <meshPhysicalMaterial 
+          <meshStandardMaterial 
             color={bodyColor} 
             roughness={0.3} 
             metalness={0.7} 
-            clearcoat={0.3}
-            clearcoatRoughness={0.2}
             envMapIntensity={1.5}
           />
         </RoundedBox>
         {/* Bottom plate (slightly darker) */}
         <RoundedBox args={[4.15, 0.03, 2.75]} radius={0.015} smoothness={2} position={[0, -0.015, 0]}>
-          <meshPhysicalMaterial 
+          <meshStandardMaterial 
             color={darkAccent} 
             roughness={0.4} 
             metalness={0.6} 
-            clearcoat={0.2}
-            clearcoatRoughness={0.3}
             envMapIntensity={1.2}
           />
         </RoundedBox>
@@ -166,12 +162,10 @@ export default function ScrollDevice() {
       {/* ══════════ TRACKPAD ══════════ */}
       <mesh position={[0, -1.385, 1.1]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.6, 1.0]} />
-        <meshPhysicalMaterial 
+        <meshStandardMaterial 
           color="#a1a4a8" 
-          roughness={0.1} 
+          roughness={0.2} 
           metalness={0.5}
-          clearcoat={1.0}
-          clearcoatRoughness={0.1}
           envMapIntensity={2}
         />
       </mesh>
@@ -194,12 +188,10 @@ export default function ScrollDevice() {
       {/* ══════════ HINGE ══════════ */}
       <mesh position={[0, -1.42, -1.2]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.04, 0.04, 4.0, 16]} />
-        <meshPhysicalMaterial 
+        <meshStandardMaterial 
           color="#383d4e" 
           roughness={0.3} 
           metalness={0.7}
-          clearcoat={0.5}
-          clearcoatRoughness={0.1}
           envMapIntensity={1.5}
         />
       </mesh>
@@ -208,12 +200,10 @@ export default function ScrollDevice() {
       <group position={[0, -1.4, -1.2]} rotation={[0.1, 0, 0]}>
         {/* Outer lid shell */}
         <RoundedBox args={[4.2, 2.85, 0.04]} radius={0.02} smoothness={2} position={[0, 1.42, 0]}>
-          <meshPhysicalMaterial 
+          <meshStandardMaterial 
             color={bodyColor} 
             roughness={0.3} 
             metalness={0.7} 
-            clearcoat={0.4}
-            clearcoatRoughness={0.15}
             envMapIntensity={1.5}
           />
         </RoundedBox>
@@ -243,14 +233,12 @@ export default function ScrollDevice() {
         {/* Screen glass reflection layer */}
         <mesh position={[0, 1.42, 0.0215]}>
           <planeGeometry args={[4.14, 2.79]} />
-          <meshPhysicalMaterial 
+          <meshStandardMaterial 
             color="#000000"
             transparent
-            opacity={0.08}
-            roughness={0}
-            metalness={0}
-            clearcoat={1}
-            clearcoatRoughness={0}
+            opacity={0.1}
+            roughness={0.1}
+            metalness={0.8}
             envMapIntensity={3}
           />
         </mesh>
