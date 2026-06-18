@@ -13,19 +13,20 @@ export default function ScrollDevice() {
 
   // Memoize ALL shared geometries and materials once
   const shared = useMemo(() => {
-    const bodyMat = new THREE.MeshStandardMaterial({ color: '#a1a4a8', roughness: 0.3, metalness: 0.7 });
-    const darkMat = new THREE.MeshStandardMaterial({ color: '#898c90', roughness: 0.4, metalness: 0.6 });
-    const keyboardMat = new THREE.MeshBasicMaterial({ color: '#0a0d14' });
-    const keyMat = new THREE.MeshBasicMaterial({ color: '#14171f' });
+    const bodyMat = new THREE.MeshPhysicalMaterial({ color: '#a1a4a8', roughness: 0.25, metalness: 0.95, clearcoat: 0.3, clearcoatRoughness: 0.2, envMapIntensity: 2 });
+    const darkMat = new THREE.MeshPhysicalMaterial({ color: '#898c90', roughness: 0.35, metalness: 0.9, clearcoat: 0.2, clearcoatRoughness: 0.3, envMapIntensity: 1.5 });
+    const keyboardMat = new THREE.MeshStandardMaterial({ color: '#0a0d14', roughness: 0.95 });
+    const keyMat = new THREE.MeshPhysicalMaterial({ color: '#14171f', roughness: 0.7, metalness: 0.1, clearcoat: 0.1 });
     const keyGeo = new THREE.PlaneGeometry(0.2, 0.22);
     const holeMat = new THREE.MeshBasicMaterial({ color: '#080a10' });
     const holeGeo = new THREE.PlaneGeometry(0.12, 0.04);
-    const footGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.02, 8);
-    const footMat = new THREE.MeshBasicMaterial({ color: '#111111' });
-    const hingeMat = new THREE.MeshStandardMaterial({ color: '#383d4e', roughness: 0.3, metalness: 0.7 });
-    const trackpadMat = new THREE.MeshStandardMaterial({ color: '#a1a4a8', roughness: 0.2, metalness: 0.5 });
+    const footGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.02, 16);
+    const footMat = new THREE.MeshStandardMaterial({ color: '#111111', roughness: 0.9 });
+    const hingeMat = new THREE.MeshPhysicalMaterial({ color: '#383d4e', roughness: 0.2, metalness: 0.95, clearcoat: 0.5, clearcoatRoughness: 0.1, envMapIntensity: 2.5 });
+    const trackpadMat = new THREE.MeshPhysicalMaterial({ color: '#a1a4a8', roughness: 0.1, metalness: 0.5, clearcoat: 1.0, clearcoatRoughness: 0.1, envMapIntensity: 2 });
     const spacebarMat = keyMat;
-    return { bodyMat, darkMat, keyboardMat, keyMat, keyGeo, holeMat, holeGeo, footGeo, footMat, hingeMat, trackpadMat, spacebarMat };
+    const glassMat = new THREE.MeshPhysicalMaterial({ color: '#000000', transparent: true, opacity: 0.08, roughness: 0, metalness: 0, clearcoat: 1, clearcoatRoughness: 0, envMapIntensity: 3 });
+    return { bodyMat, darkMat, keyboardMat, keyMat, keyGeo, holeMat, holeGeo, footGeo, footMat, hingeMat, trackpadMat, spacebarMat, glassMat };
   }, []);
 
   useFrame(() => {
@@ -66,9 +67,8 @@ export default function ScrollDevice() {
       {/* ══════════ KEYBOARD AREA ══════════ */}
       <group position={[0, -1.38, -0.1]}>
         {/* Keyboard recess */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} material={shared.keyboardMat}>
           <planeGeometry args={[3.6, 1.6]} />
-          <meshBasicMaterial color="#0a0d14" />
         </mesh>
         
         {/* Individual key rows - using shared geometry and material */}
@@ -87,9 +87,8 @@ export default function ScrollDevice() {
         ))}
         
         {/* Space bar */}
-        <mesh position={[0, 0.005, 0.85]} rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh position={[0, 0.005, 0.85]} rotation={[-Math.PI / 2, 0, 0]} material={shared.spacebarMat}>
           <planeGeometry args={[1.6, 0.22]} />
-          <meshBasicMaterial color="#14171f" />
         </mesh>
       </group>
 
@@ -152,9 +151,8 @@ export default function ScrollDevice() {
         </mesh>
 
         {/* Glass reflection overlay for premium look */}
-        <mesh position={[0, 1.42, 0.0215]}>
+        <mesh position={[0, 1.42, 0.0215]} material={shared.glassMat}>
           <planeGeometry args={[4.14, 2.79]} />
-          <meshBasicMaterial color="#ffffff" transparent opacity={0.03} />
         </mesh>
       </group>
     </group>
