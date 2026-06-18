@@ -42,8 +42,6 @@ export default function WorksScene() {
         <spotLight position={[0, 5, 5]} angle={0.5} penumbra={1} intensity={1.5} color="#ffffff" />
         
         <Suspense fallback={<Loader />}>
-          <Environment preset="city" />
-          
           <ParticleField count={300} />
           
           <group position={[0, -2, 0]}>
@@ -53,6 +51,10 @@ export default function WorksScene() {
           <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
             <ScrollDevice />
           </Float>
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <Environment preset="city" />
         </Suspense>
       </Canvas>
     </div>
