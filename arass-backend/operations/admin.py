@@ -53,6 +53,16 @@ class ProjectAdmin(ModelAdmin):
             import traceback
             messages.error(request, f"Error saving changelist: {str(e)} | Trace: {traceback.format_exc()[:500]}")
 
+    def changelist_view(self, request, extra_context=None):
+        try:
+            return super().changelist_view(request, extra_context)
+        except Exception as e:
+            from django.contrib import messages
+            import traceback
+            messages.error(request, f"Changelist error: {str(e)} | Trace: {traceback.format_exc()[:500]}")
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect(request.path)
+
     @display(description="Status", label={
         "Planning": "warning",
         "In Progress": "info",
